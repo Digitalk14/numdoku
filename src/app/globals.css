@@ -2,20 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F8FAFF;
+  color: #1E2B4F;
+  font-family: var(--font-noto-sans-newa), system-ui, -apple-system, sans-serif;
+}
+
+/* Custom scrollbar */
+[class*="max-h-\[300px\]"]::-webkit-scrollbar {
+  width: 6px;
+}
+
+[class*="max-h-\[300px\]"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[class*="max-h-\[300px\]"]::-webkit-scrollbar-thumb {
+  background: #E7ECF3;
+  border-radius: 3px;
+}
+
+[class*="max-h-\[300px\]"]::-webkit-scrollbar-thumb:hover {
+  background: #D1D9E6;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+/* Input focus ring */
+input:focus {
+  box-shadow: 0 0 0 3px rgba(77, 119, 255, 0.1);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.results-container {
+  div{
+    display: flex;
+  }
+  span{
+    background-color: #79797a;
+    padding: 3px 5px;
+    border-radius: 5px;
+    color: #fff;
+    margin: 0 2px 0 0;
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 768px) {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      font-size: 12px;
+    }
+  }
 }
