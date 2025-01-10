@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import GameBoard from "./components/GameBoard";
 import { generateSecretNumber } from "./utils/gameLogic";
-import { raleway } from "./layout";
-
+import { raleway } from "./components/GameBoard";
 export default function Home() {
   const [secretNumber, setSecretNumber] = useState("");
   const [showWelcome, setShowWelcome] = useState(true);

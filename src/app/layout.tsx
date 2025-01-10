@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Raleway } from 'next/font/google';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,11 +9,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-export const raleway = Raleway({
-  subsets: ['latin'],
-  display: 'swap',
 });
 
 export default function RootLayout({

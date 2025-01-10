@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { checkGuess } from "../utils/gameLogic";
 import Dialog from "./Dialog";
-import { raleway } from "../layout";
+import { Raleway } from 'next/font/google';
+
+export const raleway = Raleway({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 interface GuessResult {
   guess: string;
