@@ -4,12 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { checkGuess } from "../utils/gameLogic";
 import Dialog from "./Dialog";
-import { Raleway } from 'next/font/google';
-import correctness from '../shared/assets/correctness.svg';
-import correctPosition from '../shared/assets/correctpositions.svg';
+import { Raleway } from "next/font/google";
+import correctness from "../shared/assets/correctness.svg";
+import correctPosition from "../shared/assets/correctpositions.svg";
 export const raleway = Raleway({
-  subsets: ['latin'],
-  display: 'swap',
+  subsets: ["latin"],
+  display: "swap",
 });
 
 interface GuessResult {
@@ -72,8 +72,16 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
     setDialog({ isOpen: false, title: "", message: "" });
   };
   return (
-    <div className="space-y-6">
-      <p className={`text-[#1E2B4F] text-2xl ${raleway.className}`}>NumDoku</p>
+    <div className="space-y-3">
+      <p
+        className={`text-[#1E2B4F] text-2xl ${raleway.className} flex justify-between`}
+      >
+        NumDoku{" "}
+        <span className="text-sm text-[#333] flex items-center gap-1">
+          {" "}
+          Tries left:{" "} <b>{maxTries - guesses.length}</b>
+        </span>
+      </p>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col sm:flex-row gap-3">
@@ -101,22 +109,33 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
               Try
             </button>
           </div>
-          {hasRecurringDigits && (
-            <div className="text-red-500">Please use unique digits</div>
-          )}
-          {hasZero && (
-            <div className="text-red-500">Please use digits 1-9 only</div>
-          )}
+          <div className="text-red-500 h-3 text-xs">
+            {hasRecurringDigits && <>Please use unique digits</>}
+            {hasZero && !hasRecurringDigits && <>Please use digits 1-9 only</>}
+          </div>
         </div>
       </form>
-      <div className="mt-4 text-[#333]">
-        Remaining tries: {maxTries - guesses.length}
-      </div>
       <div className="space-y-2">
         <div className="grid grid-cols-10 gap-4 font-bold mb-2 text-[#333] text-xs">
           <div className="col-span-4">Guess</div>
-          <div className="col-span-3 flex items-center gap-1">Digits <Image width={15} height={15} src={correctness} alt="Correct digits" /></div>
-          <div className="col-span-3 flex items-center gap-1">Positions<Image width={15} height={15} src={correctPosition} alt="Correct positions" /></div>
+          <div className="col-span-3 flex items-center gap-1">
+            Digits{" "}
+            <Image
+              width={15}
+              height={15}
+              src={correctness}
+              alt="Correct digits"
+            />
+          </div>
+          <div className="col-span-3 flex items-center gap-1">
+            Positions
+            <Image
+              width={15}
+              height={15}
+              src={correctPosition}
+              alt="Correct positions"
+            />
+          </div>
         </div>
         {guesses.map((guess, index) => (
           <div
@@ -124,12 +143,20 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
             className="grid grid-cols-10 gap-4 py-1 results-container"
           >
             <div className="col-span-4">
-              {guess.guess.split('').map((digit, index) => (
+              {guess.guess.split("").map((digit, index) => (
                 <span key={index}>{digit}</span>
               ))}
             </div>
-            <div className="col-span-3"><span style={{backgroundColor: '#e39846'}}>{guess.correctNumbers}</span></div>
-            <div className="col-span-3"><span style={{backgroundColor: '#3dc87a'}}>{guess.correctPositions}</span></div>
+            <div className="col-span-3">
+              <span style={{ backgroundColor: "#e39846" }}>
+                {guess.correctNumbers}
+              </span>
+            </div>
+            <div className="col-span-3">
+              <span style={{ backgroundColor: "#3dc87a" }}>
+                {guess.correctPositions}
+              </span>
+            </div>
           </div>
         ))}
       </div>

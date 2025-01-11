@@ -1,9 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import GameBoard from "./components/GameBoard";
 import { generateSecretNumber } from "./utils/gameLogic";
 import { raleway } from "./components/GameBoard";
+import correctness from "./shared/assets/correctness.svg";
+import correctPosition from "./shared/assets/correctpositions.svg";
+
 export default function Home() {
   const [secretNumber, setSecretNumber] = useState("");
   const [showWelcome, setShowWelcome] = useState(true);
@@ -16,8 +20,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#F8FAFF] p-6 md:flex md:items-center">
       <div className="max-w-md mx-auto">
-       
-
         {/* Welcome Dialog */}
         {showWelcome && (
           <div className="bg-white rounded-3xl shadow-[0_4px_20px_rgba(197,206,231,0.25)] p-6 mb-6">
@@ -50,7 +52,7 @@ export default function Home() {
               >
                 Game Rules
               </h2>
-              <div className="text-[#1E2B4F] mb-4 text-sm">
+              <div className="text-[#1E2B4F] mb-4 text-sm space-y-2">
                 <p>
                   The goal of the game is to guess a 4-digit secret number. Each
                   digit is unique, and digits range from 1 to 9 (0 is not
@@ -58,12 +60,32 @@ export default function Home() {
                 </p>
                 <p>You will receive two clues for each guess:</p>
                 <p>
-                  1. Correct numbers: The number of digits in your guess that
-                  match the secret number, regardless of their position.
+                  <span className="flex items-center gap-1">
+                    <b>1. Correct numbers </b>
+                    <Image
+                      width={15}
+                      height={15}
+                      src={correctness}
+                      alt="Correct digits"
+                    />
+                    :
+                  </span>
+                  The number of digits in your guess that match the secret
+                  number, regardless of their position.
                 </p>
                 <p>
-                  2. Correct positions: The number of digits in your guess that
-                  are in the correct position.
+                  <span className="flex items-center gap-1">
+                    <b>2. Correct positions</b>
+                    <Image
+                      width={15}
+                      height={15}
+                      src={correctPosition}
+                      alt="Correct positions"
+                    />
+                    :
+                  </span>
+                  The number of digits in your guess that are in the correct
+                  position.
                 </p>
                 <ul>
                   For example, if the secret number is 5839 and your guess is
