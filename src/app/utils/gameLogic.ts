@@ -1,5 +1,5 @@
 export function generateSecretNumber(): string {
-    const digits = Array.from({ length: 10 }, (_, i) => i.toString());
+    const digits = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
     let result = '';
     
     // Fisher-Yates shuffle algorithm
