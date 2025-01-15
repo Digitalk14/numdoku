@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import Confetti from "react-confetti";
 import { checkGuess } from "../utils/gameLogic";
 import Dialog from "./Dialog";
 import { Raleway } from "next/font/google";
 import correctness from "../shared/assets/correctness.svg";
 import correctPosition from "../shared/assets/correctpositions.svg";
+import { generateSecretNumber } from "../utils/gameLogic";
+
 export const raleway = Raleway({
   subsets: ["latin"],
   display: "swap",
@@ -18,13 +21,11 @@ interface GuessResult {
   correctPositions: number;
 }
 
-interface GameBoardProps {
-  secretNumber: string;
-}
-
-export default function GameBoard({ secretNumber }: GameBoardProps) {
+export default function GameBoard() {
   const [currentGuess, setCurrentGuess] = useState("");
+  const [secretNumber, setSecretNumber] = useState("");
   const [guesses, setGuesses] = useState<GuessResult[]>([]);
+  const [isConfettiActive, setIsConfettiActive] = useState(false);
   const [dialog, setDialog] = useState<{
     isOpen: boolean;
     title: string;
@@ -35,11 +36,14 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
     message: "",
   });
   const maxTries = 8;
-
   const hasRecurringDigits =
     currentGuess.length === 4 && new Set(currentGuess).size !== 4;
 
   const hasZero = currentGuess.includes("0");
+
+  useEffect(() => {
+    setSecretNumber(generateSecretNumber());
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,6 +54,7 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
         title: "Congratulations!",
         message: "You won! You guessed the correct number!",
       });
+      setIsConfettiActive(true);
     } else {
       const result = checkGuess(currentGuess, secretNumber);
       const newGuesses = [{ guess: currentGuess, ...result }, ...guesses];
@@ -67,7 +72,9 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
   };
 
   const resetGame = () => {
+    setSecretNumber(generateSecretNumber());
     setCurrentGuess("");
+    setIsConfettiActive(false);
     setGuesses([]);
     setDialog({ isOpen: false, title: "", message: "" });
   };
@@ -79,7 +86,7 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
         NumDoku{" "}
         <span className="text-sm text-[#333] flex items-center gap-1">
           {" "}
-          Tries left:{" "} <b>{maxTries - guesses.length}</b>
+          Tries left: <b>{maxTries - guesses.length}</b>
         </span>
       </p>
       <form onSubmit={handleSubmit}>
@@ -171,6 +178,7 @@ export default function GameBoard({ secretNumber }: GameBoardProps) {
         }
         onRestart={resetGame}
       />
+      {isConfettiActive && <Confetti run />}
     </div>
   );
 }

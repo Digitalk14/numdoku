@@ -1,22 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import GameBoard from "./components/GameBoard";
-import { generateSecretNumber } from "./utils/gameLogic";
 import { raleway } from "./components/GameBoard";
 import correctness from "./shared/assets/correctness.svg";
 import correctPosition from "./shared/assets/correctpositions.svg";
 
 export default function Home() {
-  const [secretNumber, setSecretNumber] = useState("");
   const [showWelcome, setShowWelcome] = useState(true);
   const [showRules, setShowRules] = useState(false);
-
-  useEffect(() => {
-    setSecretNumber(generateSecretNumber());
-  }, []);
-
   return (
     <main className="min-h-screen bg-[#F8FAFF] p-6 md:flex md:items-center">
       <div className="max-w-md mx-auto">
@@ -113,7 +106,7 @@ export default function Home() {
         {/* Game Container */}
         {!showWelcome && !showRules && (
           <div className="bg-white rounded-3xl shadow-[0_4px_20px_rgba(197,206,231,0.25)] p-6">
-            <GameBoard secretNumber={secretNumber} />
+            <GameBoard />
           </div>
         )}
       </div>
