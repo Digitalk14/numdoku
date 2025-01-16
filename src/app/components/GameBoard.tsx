@@ -15,7 +15,7 @@ export const raleway = Raleway({
   display: "swap",
 });
 
-interface GuessResult {
+export interface GuessResult {
   guess: string;
   correctNumbers: number;
   correctPositions: number;
@@ -38,9 +38,7 @@ export default function GameBoard() {
   const maxTries = 8;
   const hasRecurringDigits =
     currentGuess.length === 4 && new Set(currentGuess).size !== 4;
-
   const hasZero = currentGuess.includes("0");
-
   useEffect(() => {
     setSecretNumber(generateSecretNumber());
   }, []);
@@ -52,7 +50,7 @@ export default function GameBoard() {
       setDialog({
         isOpen: true,
         title: "Congratulations!",
-        message: "You won! You guessed the correct number!",
+        message: `You won! You guessed the correct number ${secretNumber} in ${guesses.length} tries`,
       });
       setIsConfettiActive(true);
     } else {
@@ -171,6 +169,8 @@ export default function GameBoard() {
         isOpen={dialog.isOpen}
         title={dialog.title}
         message={dialog.message}
+        secretNumber={secretNumber}
+        guesses={guesses}
         onClose={() => setDialog({ isOpen: false, title: "", message: "" })}
         isGameOver={
           dialog.title.includes("Game Over") ||
