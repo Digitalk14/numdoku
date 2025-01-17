@@ -24,6 +24,7 @@ export default function RootLayout({
       <head>
         <title>NumDoku</title>
         <meta name="description" content="Guess the 4-digit secret number" />
+        <meta name="google-site-verification" content="yc2jvx7_lKDdV68tD1UROQwwFiYH_-htTe269bkB3AM" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
